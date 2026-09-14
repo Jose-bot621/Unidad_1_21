@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pe.edu.upeu.sysventas.controller.ProductoController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pe.edu.upeu.sysventas.controller.ProductoController">
    <children>
-      <VBox layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <AnchorPane prefWidth="200.0">
+            <AnchorPane>
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Gestionar Productos" textFill="#0e866e">
                      <font>
@@ -35,11 +35,11 @@
                   <Insets bottom="5.0" />
                </padding>
             </AnchorPane>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane>
                      <children>
-                        <GridPane layoutX="23.0" layoutY="14.0">
+                        <GridPane layoutY="7.0" AnchorPane.leftAnchor="0.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,43 +49,105 @@
                           <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label alignment="CENTER" prefHeight="17.0" prefWidth="420.0" text="Formulario de Registro" GridPane.columnSpan="2147483647">
                                  <font>
-                                    <Font size="22.0" />
+                                    <Font name="System Bold Italic" size="22.0" />
                                  </font>
                               </Label>
-                              <Label text="Tipo Producto" GridPane.rowIndex="1" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Nombre Producto" GridPane.rowIndex="2" />
-                              <TextField prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                              <Label text="P. Unidad" GridPane.rowIndex="3" />
-                              <Label text="Utilidad" GridPane.rowIndex="4" />
-                              <Label text="Stock" GridPane.rowIndex="5" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="P. Unid Old" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <Label text="Stock old" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                              <Label text="Tipo Producto" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <ComboBox fx:id="cbxTipoProducto" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Nombre Producto" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                              <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                              <Label text="P. Unit" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <Label text="Utilidad" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                              <Label text="Stock" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <TextField fx:id="txtPUnit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="P. Unit Old" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <TextField fx:id="txtPUnitOld" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtUtilidad" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Stock old" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                              <TextField fx:id="txtStockOld" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                              <Label text="Categoria" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Marca" GridPane.rowIndex="7">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Unidad Medida" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="cbxCategoria" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="cbxMarca" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+                              <ComboBox fx:id="cbxUnidadMedida" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+                              <Button mnemonicParsing="false" text="Cancelar" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                                 <font>
+                                    <Font name="Arial Narrow" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <font>
+                                    <Font name="Arial Narrow" size="12.0" />
+                                 </font>
+                              </Button>
                            </children>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
                         </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <TableView layoutX="7.0" layoutY="28.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </children>
             </HBox>
          </children>
       </VBox>
-      <PasswordField />
    </children>
 </AnchorPane>

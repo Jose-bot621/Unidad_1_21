@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pe.edu.upeu.sysventas.controller.ProductoController">
+<AnchorPane fx:id="miContenedor" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pe.edu.upeu.sysventas.controller.ProductoController">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -21,7 +21,7 @@
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="295.0" layoutY="55.0" />
+                  <TextField fx:id="txtFiltroDato" layoutX="295.0" layoutY="55.0" />
                   <Button layoutX="456.0" layoutY="55.0" mnemonicParsing="false" text="Buscar">
                      <font>
                         <Font name="JetBrains Mono Bold Italic" size="12.0" />
@@ -74,7 +74,7 @@
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font></Label>
-                              <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtNombreProducto" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                               <Label text="P. Unit" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
@@ -123,11 +123,12 @@
                                     <Font name="Arial Narrow" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                              <Button mnemonicParsing="false" onAction="#validarFormulario" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="Arial Narrow" size="12.0" />
                                  </font>
                               </Button>
+                              <Label fx:id="lbnMsg" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" />
                            </children>
                            <padding>
                               <Insets left="5.0" />

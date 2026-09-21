@@ -30,7 +30,7 @@ public class CategoriaServiceImp extends CrudGenericoServiceImp<Categoria, Long>
         List<ComboBoxOption> listar = new ArrayList<>();
         for (Categoria cat : categoriaRepository.findAll()) {
             ComboBoxOption cb = new ComboBoxOption();
-            cb.setKey(String.valueOf(cat.getNombre()));
+            cb.setKey(String.valueOf(cat.getIdCategoria()));
             cb.setValue(cat.getNombre());
             listar.add(cb);
         }

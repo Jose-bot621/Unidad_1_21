@@ -7,23 +7,41 @@ import java.util.List;
 
 public class Tienda {
     private String nombre;
-    private Inventario inventario = new Inventario();
+    private Inventario inventario;
 
-    public Tienda(String nombre) { this.nombre = nombre; }
-    public String getNombre() { return nombre; }
+    public Tienda(String nombre) {
+        this.nombre = nombre;
+        this.inventario = new Inventario();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
 
     public void registrarProducto(Producto p) {
         inventario.agregar(p);
-        System.out.println(" Agregado: " + p.getNombre());
+        System.out.println("Agregado: " + p.getNombre());
     }
 
-    public List<Producto> obtenerInventario() { return inventario.listarTodos(); }
-    public Producto buscarProducto(String nombre) { return (Producto) inventario.buscar(nombre); }
+    public List<Producto> obtenerInventario() {
+        return inventario.listarTodos();
+    }
+
+    public Producto buscarProducto(String nombre) {
+        return inventario.buscar(nombre);
+    }
 
     public boolean retirarProducto(String nombre) {
-        try { inventario.eliminar(nombre); return true; }
-        catch (ProductoNoEncontradoException e) { System.out.println(e.getMessage()); return false; }
+        try {
+            inventario.eliminar(nombre);
+            return true;
+        } catch (ProductoNoEncontradoException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
-    public double getValorTotalInventario() { return inventario.calcularValorTotal(); }
+    public double getValorTotalInventario() {
+        return inventario.calcularValorTotal();
+    }
 }

@@ -1,11 +1,13 @@
-package pe.edu.upeu.tiendderopa.enums;
+package pe.edu.upeu.tiendaderopa.enums;
 
 public enum Talla {
+
     XS("Extra pequeña"),
     S("Pequeña"),
     M("Mediana"),
     L("Grande"),
-    XL("Extra grande");
+    XL("Extra grande"),
+    XXL("Doble extra grande");
 
     private final String descripcion;
 
@@ -15,5 +17,10 @@ public enum Talla {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return name();
     }
 }

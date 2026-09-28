@@ -1,10 +1,10 @@
 package pe.edu.upeu.tiendderopa.model;
 
-import pe.edu.upeu.tiendderopa.interfaces.Mostrable;
-
-public class Categoria implements Mostrable {
+public class Categoria {
     private String nombre;
     private String descripcion;
+
+    public Categoria() {}
 
     public Categoria(String nombre, String descripcion) {
         this.nombre = nombre;
@@ -12,10 +12,8 @@ public class Categoria implements Mostrable {
     }
 
     public String getNombre() { return nombre; }
-    public String getDescripcion() { return descripcion; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    @Override
-    public String mostrarInformacion() {
-        return "Categoría: " + nombre + " - " + descripcion;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 }

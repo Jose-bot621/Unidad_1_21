@@ -1,26 +1,27 @@
 package pe.edu.upeu.tiendderopa.controller;
 
+// =============================================
+// ✅ IMPORTS COMPLETOS Y BIEN ESCRITOS
+// =============================================
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ActionEvent;  // ← ESTE faltaba ✅
 import pe.edu.upeu.tiendderopa.enums.Talla;
 import pe.edu.upeu.tiendderopa.model.Categoria;
 import pe.edu.upeu.tiendderopa.model.Producto;
-import pe.edu.upeu.tiendderopa.service.Tienda;
 
 public class GestionProductoController {
 
-    @FXML private TextField txtTipoProducto;
-    @FXML private TextField txtNombreProducto;
+    @FXML private ComboBox<String> cbxTipo;
+    @FXML private TextField txtNombre;
     @FXML private TextField txtPrecio;
     @FXML private TextField txtStock;
-    @FXML private TextField txtCategoria;
-    @FXML private TextField txtMarca;
+    @FXML private ComboBox<String> cbxCategoria;
     @FXML private ComboBox<Talla> cbxTalla;
-    @FXML private TextField txtUnidadMedida;
-    @FXML private TextField txtBuscar;
+    @FXML private ComboBox<String> cbxMarca;
 
     @FXML private TableView<Producto> tablaProductos;
     @FXML private TableColumn<Producto, String> colTipo;
@@ -30,75 +31,122 @@ public class GestionProductoController {
     @FXML private TableColumn<Producto, String> colCategoria;
     @FXML private TableColumn<Producto, String> colTalla;
     @FXML private TableColumn<Producto, String> colMarca;
-    @FXML private TableColumn<Producto, String> colUnidad;
 
-    private Tienda tienda;
     private ObservableList<Producto> listaProductos;
+    private Producto productoEnEdicion;
 
     @FXML
     public void initialize() {
-        tienda = new Tienda("Moda y Estilo");
         listaProductos = FXCollections.observableArrayList();
-        cbxTalla.setItems(FXCollections.observableArrayList(Talla.values()));
 
-        colTipo.setCellValueFactory(cell -> cell.getValue().tipoProperty());
-        colNombre.setCellValueFactory(cell -> cell.getValue().nombreProperty());
-        colPrecio.setCellValueFactory(cell -> cell.getValue().precioProperty().asObject());
-        colStock.setCellValueFactory(cell -> cell.getValue().stockProperty().asObject());
-        colCategoria.setCellValueFactory(cell -> cell.getValue().categoriaProperty());
-        colTalla.setCellValueFactory(cell -> cell.getValue().tallaProperty());
-        colMarca.setCellValueFactory(cell -> cell.getValue().marcaProperty());
-        colUnidad.setCellValueFactory(cell -> cell.getValue().unidadMedidaProperty());
+        cbxTipo.setItems(FXCollections.observableArrayList(
+                "Camiseta", "Pantalón", "Camisa", "Vestido", "Chaqueta"
+        ));
+        cbxCategoria.setItems(FXCollections.observableArrayList(
+                "Ropa Casual", "Ropa Deportiva", "Ropa Formal"
+        ));
+        cbxMarca.setItems(FXCollections.observableArrayList(
+                "Nike", "Adidas", "Polo", "Zara"
+        ));
 
+        // ✅ Talla con descripciones
+        cbxTalla.setItems(FXCollections.observableArrayList<>(Talla.values()));
+        cbxTalla.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Talla t, boolean vacio) {
+                super.updateItem(t, vacio);
+                setText(t == null ? null : t.getDescripcion());
+            }
+        });
+        cbxTalla.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Talla t, boolean vacio) {
+                super.updateItem(t, vacio);
+                setText(t == null ? null : t.getDescripcion());
+            }
+        });
+
+        // ✅ Columnas de la tabla
+        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+        colCategoria.setCellValueFactory(cellData -> {
+            Categoria cat = cellData.getValue().getCategoria();
+            String nombre = (cat != null) ? cat.getNombre() : "";
+            return new javafx.beans.property.SimpleStringProperty(nombre);
+        });
+
+        colTalla.setCellValueFactory(cellData -> {
+            Talla t = cellData.getValue().getTalla();
+            String desc = (t != null) ? t.getDescripcion() : "";
+            return new javafx.beans.property.SimpleStringProperty(desc);
+        });
+
+        colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         tablaProductos.setItems(listaProductos);
     }
 
     @FXML
-    void guardarProducto(ActionEvent e) {
+    void guardar(ActionEvent e) {
         try {
-            String tipo = txtTipoProducto.getText().trim();
-            String nombre = txtNombreProducto.getText().trim();
+            String tipo = cbxTipo.getValue();
+            String nombre = txtNombre.getText().trim();
             double precio = Double.parseDouble(txtPrecio.getText().trim());
             int stock = Integer.parseInt(txtStock.getText().trim());
-            String cat = txtCategoria.getText().trim();
-            String marca = txtMarca.getText().trim();
+            String catNombre = cbxCategoria.getValue();
             Talla talla = cbxTalla.getValue();
-            String unidad = txtUnidadMedida.getText().trim();
+            String marca = cbxMarca.getValue();
 
-            if (nombre.isEmpty() || talla == null) {
-                alert("⚠️ Nombre y Talla son obligatorios"); return;
+            if (tipo == null || nombre.isEmpty() || catNombre == null
+                    || talla == null || marca == null) {
+                mostrarAlerta("⚠️ Completa todos los campos");
+                return;
             }
 
-            Producto p = new Producto(tipo, nombre, new Categoria(cat, ""), precio, stock, talla, marca, unidad);
-            tienda.registrarProducto(p);
-            listaProductos.add(p);
-            limpiar();
-            alert(" Guardado correctamente");
+            if (productoEnEdicion != null) {
+                productoEnEdicion.setTipo(tipo);
+                productoEnEdicion.setNombre(nombre);
+                productoEnEdicion.setPrecio(precio);
+                productoEnEdicion.setStock(stock);
+                productoEnEdicion.setCategoria(new Categoria(catNombre, ""));
+                productoEnEdicion.setTalla(talla);
+                productoEnEdicion.setMarca(marca);
+                mostrarAlerta("✅ Producto ACTUALIZADO");
+            } else {
+                Categoria cat = new Categoria(catNombre, "");
+                Producto nuevo = new Producto(tipo, nombre, cat, precio, stock, talla, marca);
+                listaProductos.add(nuevo);
+                mostrarAlerta("✅ Producto GUARDADO");
+            }
+            limpiarFormulario();
+            productoEnEdicion = null;
         } catch (NumberFormatException ex) {
-            alert(" Precio y Stock deben ser números");
+            mostrarAlerta("❌ Precio y Stock deben ser números válidos");
         }
     }
 
-    @FXML void cancelar(ActionEvent e) { limpiar(); }
-
-    @FXML void buscarProducto(ActionEvent e) {
-        String nom = txtBuscar.getText().trim();
-        listaProductos.clear();
-        if (nom.isEmpty()) listaProductos.addAll(tienda.obtenerInventario());
-        else {
-            Producto enc = tienda.buscarProducto(nom);
-            if (enc != null) listaProductos.add(enc);
-            else alert(" No encontrado");
-        }
+    @FXML
+    void cancelar(ActionEvent e) {
+        limpiarFormulario();
+        productoEnEdicion = null;
     }
 
-    private void limpiar() {
-        txtTipoProducto.clear(); txtNombreProducto.clear(); txtPrecio.clear();
-        txtStock.clear(); txtCategoria.clear(); txtMarca.clear(); txtUnidadMedida.clear();
+    private void limpiarFormulario() {
+        cbxTipo.setValue(null);
+        txtNombre.clear();
+        txtPrecio.clear();
+        txtStock.clear();
+        cbxCategoria.setValue(null);
         cbxTalla.setValue(null);
+        cbxMarca.setValue(null);
     }
 
-    private void alert(String msg) {
-        new Alert(Alert.AlertType.INFORMATION, msg).showAndWait();
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Mensaje");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

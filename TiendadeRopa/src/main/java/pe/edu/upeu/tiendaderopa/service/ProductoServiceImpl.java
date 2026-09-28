@@ -51,11 +51,7 @@ public class ProductoServiceImpl implements ProductoService {
         return repository.eliminar(id);
     }
 
-    @Override
-    public Producto buscarPorId(int id) {
 
-        return repository.buscarPorId(id);
-    }
 
     @Override
     public List<Producto> listar() {

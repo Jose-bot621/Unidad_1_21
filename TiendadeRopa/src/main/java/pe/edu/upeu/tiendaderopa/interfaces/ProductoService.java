@@ -12,7 +12,6 @@ public interface ProductoService {
 
     boolean eliminar(int id);
 
-    Producto buscarPorId(int id);
 
     List<Producto> listar();
 }
